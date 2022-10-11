@@ -23,7 +23,7 @@ const LoginPage = () => {
       .required("Email é obrigatório"),
     password: yup
       .string()
-      .min(6, "No minimo 6 caracteres")
+      .min(8, "No minimo 8 caracteres")
       .required("Senha é obrigatória"),
   });
 
@@ -88,7 +88,7 @@ const LoginPage = () => {
         <span>Ainda não possui uma conta?</span>
 
         <Button variant="secondary" type="button" onClick={handleRegister}>
-          Loging
+          Cadastre-se
         </Button>
       </div>
     </TagDiv>
