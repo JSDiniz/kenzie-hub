@@ -9,7 +9,7 @@ import Api from "../../services/Api";
 const RegisterModal = () => {
   const notify = (message) => toast(message);
 
-  const { setCardModal } = useContext(AuthContext);
+  const { setCardModal, setUserTechs } = useContext(AuthContext);
 
   function closeModal() {
     setCardModal(null);
@@ -28,6 +28,9 @@ const RegisterModal = () => {
           notify
         );
       });
+
+    const newUserTechs = await Api.get("/profile");
+    setUserTechs(newUserTechs.data.techs);
 
     setCardModal(null);
   }
