@@ -19,7 +19,6 @@ const Techs = ({ technics }) => {
       .catch((err) => console.log(err));
 
     const newUserTechs = await Api.get("/profile");
-
     setUserTechs(newUserTechs.data.techs);
 
     setCardModal(true);
