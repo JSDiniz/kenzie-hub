@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
     }
 
     loadUser();
-  }, [cardModal]);
+  }, []);
 
   async function registerUser(data) {
     try {
@@ -48,6 +48,9 @@ const AuthProvider = ({ children }) => {
       Api.defaults.headers.authorization = `Bearer ${token}`;
 
       setUser(userResponse);
+      setUserTechs(userResponse.techs);
+
+      console.log(userTechs);
 
       localStorage.setItem("@KenzieHub:token", token);
 
