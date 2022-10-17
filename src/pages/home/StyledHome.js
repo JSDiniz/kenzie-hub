@@ -67,6 +67,49 @@ export const StyledMain = styled.main`
       font-size: 1.25rem;
       line-height: 22px;
     }
+
+    div {
+      width: 100%;
+      height: 75px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      border-bottom: none;
+
+      button {
+        width: 32px;
+        height: 32px;
+
+        color: var(--color-grey-0);
+        background-color: var(--color-grey-3);
+
+        border-radius: 4px;
+        border: none;
+
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: var(--color-grey-2);
+      }
+    }
+
+    ul {
+      width: 100%;
+      height: 100%;
+
+      padding: 23px 22px;
+
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      background-color: var(--color-grey-3);
+
+      border-radius: 4px;
+    }
   }
 
   @media (max-width: 768px) {

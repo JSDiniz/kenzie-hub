@@ -1,11 +1,16 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Navigate } from "react-router-dom";
+import { StyledHeader, StyledMain, StyledSection } from "./StyledHome";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useContext } from "react";
+
+import RegisterModal from "../../components/RegisterModal/index";
 import Button from "../../components/Button";
-import { StyledHeader, StyledSection } from "./StyledHome";
-import { StyledMain } from "./StyledHome";
+import Techs from "./Techs";
 
 const HomePage = () => {
+  const { user, loading, cardModal, setCardModal, userTechs } =
+    useContext(AuthContext);
   const { name, module } = useParams();
-
   const navigate = useNavigate();
 
   const exit = () => {
@@ -14,30 +19,54 @@ const HomePage = () => {
     navigate("/");
   };
 
+  if (loading) {
+    return null;
+  }
+
+  function ShowModal() {
+    setCardModal(true);
+  }
+
   return (
     <>
-      <StyledHeader>
-        <StyledSection>
-          <h1>kenzie Hub</h1>
-          <Button variant="comeBack" onClick={exit}>
-            Sair
-          </Button>
-        </StyledSection>
-      </StyledHeader>
-      <StyledMain>
-        <div>
-          <StyledSection>
-            <h2>Olá, {name}</h2>
-            <p>{module}</p>
-          </StyledSection>
-        </div>
-        <StyledSection>
-          <h2>Que pena! Estamos em desenvolvimento :(</h2>
-          <p>
-            Nossa aplicação está em desenvolvimento, em breve teremos novidades
-          </p>
-        </StyledSection>
-      </StyledMain>
+      {user ? (
+        <>
+          <StyledHeader>
+            <StyledSection>
+              <h1>kenzie Hub</h1>
+              <Button variant="comeBack" onClick={exit}>
+                Sair
+              </Button>
+            </StyledSection>
+          </StyledHeader>
+          <StyledMain>
+            <div>
+              <StyledSection>
+                <h2>Olá, {name}</h2>
+                <p>{module}</p>
+              </StyledSection>
+            </div>
+            <StyledSection>
+              {cardModal && <RegisterModal />}
+
+              <div>
+                <p>Tecnologias</p>
+                <button onClick={() => ShowModal()}>+</button>
+              </div>
+
+              {userTechs.length !== 0 && (
+                <ul>
+                  {userTechs.map((technics) => (
+                    <Techs key={technics.id} technics={technics} />
+                  ))}
+                </ul>
+              )}
+            </StyledSection>
+          </StyledMain>
+        </>
+      ) : (
+        <Navigate to="/" replace />
+      )}
     </>
   );
 };
