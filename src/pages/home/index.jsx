@@ -27,8 +27,6 @@ const HomePage = () => {
     setCardModal(true);
   }
 
-  console.log(userTechs);
-
   return (
     <>
       {user ? (
