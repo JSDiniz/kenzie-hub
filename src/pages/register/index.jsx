@@ -22,7 +22,7 @@ const RegisterPage = () => {
     password: yup
       .string()
       .required("Campo obrigatório!")
-      .min(6, "Mínimo de 6 caracteres!")
+      .min(8, "Mínimo de 8 caracteres!")
       .matches(
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/,
         "A senha deve conter pelo menos uma letra maiúscula, um número e um caractere especial!"
