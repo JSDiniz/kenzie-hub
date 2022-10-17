@@ -7,16 +7,20 @@ import { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 
 const Techs = ({ technics }) => {
-  const { setCardModal } = useContext(AuthContext);
+  const { setCardModal, setUserTechs } = useContext(AuthContext);
 
   const notify = (message) => toast(message);
 
   async function remove(id) {
-    Api.delete(`/users/techs/${id}`)
+    await Api.delete(`/users/techs/${id}`)
       .then(() => {
         toast.success("Tecnologias deletado com sucesso!", notify);
       })
       .catch((err) => console.log(err));
+
+    const newUserTechs = await Api.get("/profile");
+
+    setUserTechs(newUserTechs.data.techs);
 
     setCardModal(true);
     setCardModal(null);

@@ -17,8 +17,8 @@ const RegisterModal = () => {
 
   const { register, handleSubmit } = useForm();
 
-  function registerUser(data) {
-    Api.post("/users/techs", data)
+  async function registerUser(data) {
+    await Api.post("/users/techs", data)
       .then(() => {
         toast.success("Tecnologias cadastrado com sucesso", notify);
       })

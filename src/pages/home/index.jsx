@@ -8,7 +8,8 @@ import Button from "../../components/Button";
 import Techs from "./Techs";
 
 const HomePage = () => {
-  const { user, loading, cardModal, setCardModal } = useContext(AuthContext);
+  const { user, loading, cardModal, setCardModal, userTechs } =
+    useContext(AuthContext);
   const { name, module } = useParams();
   const navigate = useNavigate();
 
@@ -25,6 +26,8 @@ const HomePage = () => {
   function ShowModal() {
     setCardModal(true);
   }
+
+  console.log(userTechs);
 
   return (
     <>
@@ -53,9 +56,9 @@ const HomePage = () => {
                 <button onClick={() => ShowModal()}>+</button>
               </div>
 
-              {user.techs.length !== 0 && (
+              {userTechs.length !== 0 && (
                 <ul>
-                  {user.techs.map((technics) => (
+                  {userTechs.map((technics) => (
                     <Techs key={technics.id} technics={technics} />
                   ))}
                 </ul>
