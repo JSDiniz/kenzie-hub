@@ -1,20 +1,16 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 import { StyledLogin as TagDiv } from "./StyledLogin";
+import * as yup from "yup";
 import Button from "../../components/Button";
-import Api from "../../services/Api";
-import { toast } from "react-toastify";
 
 const LoginPage = () => {
-  // console.log(authenticated);
-
   const navigate = useNavigate();
-  // const token = localStorage.getItem("@KenzieHub:token") || "";
 
-  const notify = (message) => toast(message);
+  const { registerUser } = useContext(AuthContext);
 
   const schema = yup.object({
     email: yup
@@ -30,28 +26,11 @@ const LoginPage = () => {
   const {
     register,
     handleSubmit,
-    reset,
+    // reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  async function registerUser(data) {
-    Api.post("/sessions", data)
-      .then((res) => {
-        const { token } = res.data;
-        const { id, name, course_module } = res.data.user;
-        toast.success("Login feito com sucesso", notify);
-        localStorage.setItem("@KenzieHub:token", token);
-        localStorage.setItem("@KenzieHub:user", id);
-
-        navigate(`/Home/${name}/${course_module}`);
-        reset();
-      })
-      .catch(() =>
-        toast.error("Confira todos os campos, você é cadastrado?", notify)
-      );
-  }
 
   const handleRegister = (e) => {
     e.preventDefault();
