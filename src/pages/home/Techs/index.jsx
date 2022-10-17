@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 
 const Techs = ({ technics }) => {
-  const { setCardModal, setUserTechs } = useContext(AuthContext);
+  const { setUserTechs } = useContext(AuthContext);
 
   const notify = (message) => toast(message);
 
@@ -20,9 +20,6 @@ const Techs = ({ technics }) => {
 
     const newUserTechs = await Api.get("/profile");
     setUserTechs(newUserTechs.data.techs);
-
-    setCardModal(true);
-    setCardModal(null);
   }
 
   return (
