@@ -19,7 +19,7 @@ const LoginPage = () => {
       .required("Email é obrigatório"),
     password: yup
       .string()
-      .min(8, "No minimo 8 caracteres")
+      .min(6, "No minimo 6 caracteres")
       .required("Senha é obrigatória"),
   });
 

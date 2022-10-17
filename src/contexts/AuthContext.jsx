@@ -9,6 +9,7 @@ const AuthProvider = ({ children }) => {
   const [cardModal, setCardModal] = useState(null);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [userTechs, setUserTechs] = useState([]);
   const location = useLocation();
 
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const AuthProvider = ({ children }) => {
           const { data } = await Api.get("/profile");
 
           setUser(data);
+          setUserTechs(data.techs);
           // Quando uso o defaults.headers estou falando que em todo lugar da minha aplicação que ela chamar a api, ele já vai chamar o token automaticamente para todas as requisições que for utilizar
         } catch (err) {
           console.error(err);
@@ -67,6 +69,8 @@ const AuthProvider = ({ children }) => {
         loading,
         cardModal,
         setCardModal,
+        userTechs,
+        setUserTechs,
       }}
     >
       {children}
