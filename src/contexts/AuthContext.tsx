@@ -1,19 +1,52 @@
-import { createContext, useEffect, useState } from "react";
+// import { strict } from "assert";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Api from "../services/Api";
 
-export const AuthContext = createContext({});
+interface iAuthProviderProps {
+  children: ReactNode;
+}
 
-const AuthProvider = ({ children }) => {
-  const [cardModal, setCardModal] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
-  const [userTechs, setUserTechs] = useState([]);
+export interface iRegisterModal {
+  id: string;
+  email: string;
+  password: string;
+  name: string;
+  bio: string;
+  contact: string;
+  course_module: string;
+  confirmPassword?: string;
+}
+
+interface UserProviderData {
+  user?: iRegisterModal | null;
+  userTechs: iTechProps[];
+  cardModal: string | null;
+  setUserTechs: (techs: any) => void;
+  setCardModal: (techs: any) => void;
+  registerUser: (data: iRegisterModal) => Promise<void>;
+  loading: boolean;
+}
+
+export interface iTechProps {
+  id: string;
+  title: string;
+  status: string;
+}
+
+export const AuthContext = createContext<UserProviderData>(
+  {} as UserProviderData
+);
+
+const AuthProvider = ({ children }: iAuthProviderProps) => {
+  const [cardModal, setCardModal] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [user, setUser] = useState<iRegisterModal | null>(null);
+  const [userTechs, setUserTechs] = useState<iTechProps[]>([]);
   const location = useLocation();
 
   const navigate = useNavigate();
-  const notify = () => toast();
 
   useEffect(() => {
     async function loadUser() {
@@ -38,10 +71,10 @@ const AuthProvider = ({ children }) => {
     loadUser();
   }, []);
 
-  async function registerUser(data) {
+  async function registerUser(data: iRegisterModal) {
     try {
       const response = await Api.post("/sessions", data);
-      toast.success("Login feito com sucesso!", notify);
+      toast.success("Login feito com sucesso!");
 
       const { user: userResponse, token } = response.data;
 
@@ -49,8 +82,6 @@ const AuthProvider = ({ children }) => {
 
       setUser(userResponse);
       setUserTechs(userResponse.techs);
-
-      console.log(userTechs);
 
       localStorage.setItem("@KenzieHub:token", token);
 
@@ -60,7 +91,7 @@ const AuthProvider = ({ children }) => {
 
       navigate(toNavigate, { replace: true });
     } catch (err) {
-      toast.error("Confira todos os campos, você é cadastrado?", notify);
+      toast.error("Confira todos os campos, você é cadastrado?");
     }
   }
 

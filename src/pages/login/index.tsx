@@ -7,6 +7,8 @@ import { StyledLogin as TagDiv } from "./StyledLogin";
 import * as yup from "yup";
 import Button from "../../components/Button";
 
+import { iRegisterModal } from "../../contexts/AuthContext";
+
 const LoginPage = () => {
   const navigate = useNavigate();
 
@@ -28,11 +30,11 @@ const LoginPage = () => {
     handleSubmit,
     // reset,
     formState: { errors },
-  } = useForm({
+  } = useForm<iRegisterModal>({
     resolver: yupResolver(schema),
   });
 
-  const handleRegister = (e) => {
+  const handleRegister = (e: any) => {
     e.preventDefault();
     navigate("/register");
   };
@@ -61,7 +63,9 @@ const LoginPage = () => {
           />
           <span>{errors.password?.message}</span>
 
-          <Button type="submit">Loging</Button>
+          <Button variant="" type="submit">
+            Loging
+          </Button>
         </form>
 
         <span>Ainda não possui uma conta?</span>
