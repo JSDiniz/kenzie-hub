@@ -7,8 +7,6 @@ import { StyledModal } from "./StyledModal";
 import Api from "../../services/Api";
 
 const RegisterModal = () => {
-  const notify = (message) => toast(message);
-
   const { setCardModal, setUserTechs } = useContext(AuthContext);
 
   function closeModal() {
@@ -17,15 +15,14 @@ const RegisterModal = () => {
 
   const { register, handleSubmit } = useForm();
 
-  async function registerUser(data) {
+  async function registerUser<iRegisterModal>(data: iRegisterModal) {
     await Api.post("/users/techs", data)
       .then(() => {
-        toast.success("Tecnologias cadastrado com sucesso", notify);
+        toast.success("Tecnologias cadastrado com sucesso");
       })
       .catch(() => {
         toast.error(
-          "Usuário Já tem esta tecnologia criada, você só pode atualizá-la",
-          notify
+          "Usuário Já tem esta tecnologia criada, você só pode atualizá-la"
         );
       });
 
@@ -56,7 +53,7 @@ const RegisterModal = () => {
           <option value="Intermediário">Intermediário</option>
           <option value="Avançado">Avançado</option>
         </select>
-        <button type="buttom">Cadastrar Tecnologia</button>
+        <button type="button">Cadastrar Tecnologia</button>
       </form>
     </StyledModal>
   );

@@ -9,12 +9,7 @@ const App = () => {
   return (
     <>
       <Global />
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        closeOnClick
-        tema="escuro"
-      />
+      <ToastContainer />
       <AuthProvider>
         <Routes />
       </AuthProvider>
