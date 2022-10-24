@@ -8,10 +8,10 @@ import { toast } from "react-toastify";
 import { StyledRegister } from "./StyledRegister";
 import Button from "../../components/Button";
 
+import { iRegisterModal } from "../../contexts/AuthContext";
+
 const RegisterPage = () => {
   const navigate = useNavigate();
-
-  const notify = (message) => toast(message);
 
   const schema = yup.object({
     name: yup
@@ -45,22 +45,20 @@ const RegisterPage = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
+  } = useForm<iRegisterModal>({
     resolver: yupResolver(schema),
   });
 
-  const registerUser = (data) => {
+  const registerUser = (data: iRegisterModal) => {
     delete data.confirmPassword;
 
     Api.post("/users", data)
       .then(() => {
-        toast.success("Conta criada com sucesso", notify);
+        toast.success("Conta criada com sucesso");
         navigate("/");
         reset();
       })
-      .catch(() =>
-        toast.error("Erro ao criar usuário, verifique os dados", notify)
-      );
+      .catch(() => toast.error("Erro ao criar usuário, verifique os dados"));
   };
 
   const comeBack = () => navigate(-1);

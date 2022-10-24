@@ -1,6 +1,10 @@
 import styled, { css } from "styled-components";
 
-const ButtonTypeVariations = {
+interface iButtonTypeVariationsProps {
+  variant: string;
+}
+
+const ButtonTypeVariations: any = {
   primary: css`
     background-color: var(--color-primary);
     border: 1px solid var(--color-primary);
@@ -39,7 +43,7 @@ const ButtonTypeVariations = {
   `,
 };
 
-export const Container = styled.button`
+export const Container = styled.button<iButtonTypeVariationsProps>`
   width: 100%;
   height: 48px;
 
