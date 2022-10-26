@@ -34,7 +34,7 @@ const LoginPage = () => {
     resolver: yupResolver(schema),
   });
 
-  const handleRegister = (e: any) => {
+  const handleRegister = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     navigate("/register");
   };

@@ -3,7 +3,7 @@ import { Container } from "./Styled";
 
 interface iButtonpros {
   variant: string;
-  onClick?: ((e: any) => void | undefined) | undefined;
+  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
   type?: "button" | "submit" | "reset" | undefined;
   children: ReactNode;
 }
