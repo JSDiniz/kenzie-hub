@@ -4,21 +4,19 @@ import { toast } from "react-toastify";
 
 import Api from "../../../services/Api";
 import { useContext } from "react";
-import { AuthContext } from "../../../contexts/AuthContext";
+import { AuthContext, iRegisterModal } from "../../../contexts/AuthContext";
 
-const Techs = ({ technics }) => {
+const Techs = ({ technics }: any) => {
   const { setUserTechs } = useContext(AuthContext);
 
-  const notify = (message) => toast(message);
-
-  async function remove(id) {
-    await Api.delete(`/users/techs/${id}`)
+  async function remove(id: string) {
+    await Api.delete<iRegisterModal>(`/users/techs/${id}`)
       .then(() => {
-        toast.success("Tecnologias deletado com sucesso!", notify);
+        toast.success("Tecnologias deletado com sucesso!");
       })
       .catch((err) => console.log(err));
 
-    const newUserTechs = await Api.get("/profile");
+    const newUserTechs = await Api.get<iRegisterModal>("/profile");
     setUserTechs(newUserTechs.data.techs);
   }
 
