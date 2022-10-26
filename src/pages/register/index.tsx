@@ -52,7 +52,7 @@ const RegisterPage = () => {
   const registerUser = (data: iRegisterModal) => {
     delete data.confirmPassword;
 
-    Api.post("/users", data)
+    Api.post<iRegisterModal>("/users", data)
       .then(() => {
         toast.success("Conta criada com sucesso");
         navigate("/");
