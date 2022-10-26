@@ -1,4 +1,4 @@
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext, UserProviderData } from "../../contexts/AuthContext";
 import { useContext } from "react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
@@ -15,8 +15,10 @@ const RegisterModal = () => {
 
   const { register, handleSubmit } = useForm();
 
-  async function registerUser<iRegisterModal>(data: iRegisterModal) {
-    await Api.post("/users/techs", data)
+  async function registerUser<iRegisterModal>(
+    data: iRegisterModal
+  ): Promise<void> {
+    await Api.post<iRegisterModal>("/users/techs", data)
       .then(() => {
         toast.success("Tecnologias cadastrado com sucesso");
       })
@@ -26,8 +28,9 @@ const RegisterModal = () => {
         );
       });
 
-    const newUserTechs = await Api.get("/profile");
-    setUserTechs(newUserTechs.data.techs);
+    const { data: newData } = await Api.get<UserProviderData>("/profile");
+
+    setUserTechs(newData.techs);
 
     setCardModal(null);
   }
@@ -53,7 +56,7 @@ const RegisterModal = () => {
           <option value="Intermediário">Intermediário</option>
           <option value="Avançado">Avançado</option>
         </select>
-        <button type="button">Cadastrar Tecnologia</button>
+        <button type="submit">Cadastrar Tecnologia</button>
       </form>
     </StyledModal>
   );

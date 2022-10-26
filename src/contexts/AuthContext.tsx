@@ -15,13 +15,15 @@ export interface iRegisterModal {
   name: string;
   bio: string;
   contact: string;
-  course_module: string;
   confirmPassword?: string;
+  course_module?: string;
+  techs: iTechProps[];
 }
 
-interface UserProviderData {
+export interface UserProviderData {
   user?: iRegisterModal | null;
   userTechs: iTechProps[];
+  techs?: iTechProps[];
   cardModal: string | null;
   setUserTechs: (techs: any) => void;
   setCardModal: (techs: any) => void;
@@ -30,9 +32,11 @@ interface UserProviderData {
 }
 
 export interface iTechProps {
-  id: string;
-  title: string;
-  status: string;
+  id: string | null;
+  title: string | null;
+  status: string | null;
+  updated_at: string | null;
+  created_at: string | null;
 }
 
 export const AuthContext = createContext<UserProviderData>(
@@ -50,13 +54,13 @@ const AuthProvider = ({ children }: iAuthProviderProps) => {
 
   useEffect(() => {
     async function loadUser() {
-      const token = localStorage.getItem("@KenzieHub:token");
+      const token: string | null = localStorage.getItem("@KenzieHub:token");
 
       if (token) {
         try {
           Api.defaults.headers.authorization = `Bearer ${token}`;
 
-          const { data } = await Api.get("/profile");
+          const { data } = await Api.get<iRegisterModal>("/profile");
 
           setUser(data);
           setUserTechs(data.techs);
